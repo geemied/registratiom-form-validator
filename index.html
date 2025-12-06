@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: white;
+        }
+        .container {
+            width: 350px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 6px;
+        }
+        label { font-weight: bold; color: black; }
+        h2 { text-align: center; }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 14px;
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+
+        #errorMsg, #strength {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #errorMsg { color: red; display: none; }
+        button {
+            width: 100%; padding: 10px;
+            background: black; color: white;
+            border: none; border-radius: 4px;
+            cursor: pointer; font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Create Account</h2>
+    <div id="errorMsg"></div>
+    <div id="strength"></div>
+
+    <form onsubmit="return registerUser()">
+
+        <label>First Name</label>
+        <input type="text" id="fname" required>
+
+        <label>Last Name</label>
+        <input type="text" id="lname" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Password</label>
+        <input type="password" id="password" required onkeyup="checkStrength()">
+
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" required>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p style="text-align:center;margin-top:10px;">
+        Already have an account? <a href="login.html">Login</a>
+    </p>
+</div>
+
+<script>
+    function checkStrength() {
+        let pass = document.getElementById("password").value;
+        let strength = document.getElementById("strength");
+
+        if (pass.length < 5) {
+            strength.style.color = "red";
+            strength.textContent = "Weak Password";
+        } else if (pass.length < 8)
+         {
+            strength.style.color = "orange";
+            strength.textContent = "Medium Password";
+        } else {
+            strength.style.color = "green";
+            strength.textContent = "Strong Password";
+        }
+    }
+
+    function registerUser() {
+        let fname = document.getElementById("fname").value;
+        let lname = document.getElementById("lname").value;
+        let email = document.getElementById("email").value;
+        let pass = document.getElementById("password").value;
+        let conf = document.getElementById("confirmPassword").value;
+        let error = document.getElementById("errorMsg");
+
+        if (pass !== conf) {
+            error.style.display = "block";
+            error.textContent = "Passwords do not match!";
+            return false;
+        }
+
+        let user = {
+            firstName: fname,
+            lastName: lname,
+            email: email,
+            password: pass
+        };
+
+        localStorage.setItem("userData", JSON.stringify(user));
+
+        alert("Registration Successful!");
+        window.location.href = "login.html";
+        return false;
+    }
+</script>
+
+</body>
+</html>

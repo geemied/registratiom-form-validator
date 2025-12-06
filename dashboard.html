@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body { font-family: Arial; background: white; padding: 20px; }
+        .box {
+            max-width: 400px; margin: auto; padding: 20px;
+            border: 1px solid #ccc; border-radius: 6px;
+            background: #fff;
+        }
+        button {
+            width: 100%; padding: 10px;
+            background: black; color: white;
+            border: none; border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Welcome!</h2>
+
+    <p id="userInfo"></p>
+
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+    let user = JSON.parse(localStorage.getItem("userData"));
+
+    if (!user) {
+        window.location.href = "login.html";
+    }
+
+    document.getElementById("userInfo").innerHTML =
+        `<strong>Name:</strong> ${user.firstName} ${user.lastName}<br>
+         <strong>Email:</strong> ${user.email}`;
+
+    function logout() {
+        alert("Logged out successfully.");
+        window.location.href = "login.html";
+    }
+</script>
+
+</body>
+</html>
